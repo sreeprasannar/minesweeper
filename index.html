@@ -141,7 +141,7 @@
                     dropConfetti();
                     alert('Surprise! 🎊 Happy Birthday!');
                 }
-                revealAllMines();
+                // revealAllMines();
                 return;
             }
             
@@ -164,14 +164,14 @@
             });
         }
 
-        function revealAllMines() {
-            document.querySelectorAll('.cell').forEach(cell => {
-                if (cell.dataset.mine) {
-                    cell.classList.add('bomb');
-                    cell.innerText = quizMines.has(index) ? '💬' : '🎉';
-                }
-            });
-        }
+        // function revealAllMines() {
+        //     document.querySelectorAll('.cell').forEach(cell => {
+        //         if (cell.dataset.mine) {
+        //             cell.classList.add('bomb');
+        //             cell.innerText = quizMines.has(index) ? '💬' : '🎉';
+        //         }
+        //     });
+        // }
 
         function dropConfetti() {
             for (let i = 0; i < 30; i++) {
