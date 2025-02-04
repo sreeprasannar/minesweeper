@@ -189,9 +189,24 @@
         }
 
         function checkAnswer(correct) {
-            alert(correct ? 'Yay! 🎉 You got it right!' : 'Oops! Try again!');
-            quizPopup.style.display = 'none';
+            let response = document.createElement('p');
+            response.textContent = correct ? 'Yay! 🎉 You got it right!' : 'Oops! Try again!';
+            response.style.background = correct ? '#ccffcc' : '#ffcccc';
+            document.getElementById('quiz-popup').appendChild(response);
+            setTimeout(() => {
+                quizPopup.style.display = 'none';
+                response.remove();
+            }, 2000);
         }
+      
+        // function showQuiz() {
+        //     quizPopup.style.display = 'block';
+        // }
+
+        // function checkAnswer(correct) {
+        //     alert(correct ? 'Yay! 🎉 You got it right!' : 'Oops! Try again!');
+        //     quizPopup.style.display = 'none';
+        // }
 
         createBoard();
     </script>
