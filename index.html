@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kawaii Minesweeper</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background-color: #ffe4e1;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 40px);
+            grid-gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .cell {
+            width: 40px;
+            height: 40px;
+            background-color: #ffb6c1;
+            border: 2px solid #ff69b4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .cell.revealed {
+            background-color: #fff0f5;
+        }
+        .cell.bomb {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kawaii Minesweeper</h1>
+    <div class="board" id="board"></div>
+
+    <script>
+        const boardSize = 8;
+        const mineCount = 10;
+        let mines = [];
+        let cells = [];
+        const board = document.getElementById('board');
+
+        function createBoard() {
+            for (let i = 0; i < boardSize * boardSize; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.index = i;
+                cell.addEventListener('click', () => revealCell(parseInt(cell.dataset.index)));
+                board.appendChild(cell);
+                cells.push(cell);
+            }
+            placeMines();
+        }
+
+        function placeMines() {
+            let minePositions = new Set();
+            while (minePositions.size < mineCount) {
+                minePositions.add(Math.floor(Math.random() * boardSize * boardSize));
+            }
+            mines = Array.from(minePositions);
+            mines.forEach(index => cells[index].dataset.mine = 'true');
+        }
+
+        function countAdjacentMines(index) {
+            const offsets = [-1, 1, -boardSize, boardSize, -boardSize - 1, -boardSize + 1, boardSize - 1, boardSize + 1];
+            let count = 0;
+            offsets.forEach(offset => {
+                const neighbor = index + offset;
+                if (neighbor >= 0 && neighbor < boardSize * boardSize && mines.includes(neighbor)) {
+                    count++;
+                }
+            });
+            return count;
+        }
+
+        function revealCell(index) {
+            const cell = cells[index];
+            if (cell.classList.contains('revealed')) return;
+            
+            if (cell.dataset.mine) {
+                cell.classList.add('bomb');
+                cell.innerText = '💣';
+                alert('Game Over!');
+                revealAllMines();
+                return;
+            }
+            
+            cell.classList.add('revealed');
+            const mineCount = countAdjacentMines(index);
+            cell.innerText = mineCount > 0 ? mineCount : '';
+            
+            if (mineCount === 0) {
+                revealAdjacentCells(index);
+            }
+        }
+
+        function revealAdjacentCells(index) {
+            const offsets = [-1, 1, -boardSize, boardSize, -boardSize - 1, -boardSize + 1, boardSize - 1, boardSize + 1];
+            offsets.forEach(offset => {
+                const neighbor = index + offset;
+                if (neighbor >= 0 && neighbor < boardSize * boardSize) {
+                    revealCell(neighbor);
+                }
+            });
+        }
+
+        function revealAllMines() {
+            document.querySelectorAll('.cell').forEach(cell => {
+                if (cell.dataset.mine) {
+                    cell.classList.add('bomb');
+                    cell.innerText = '💣';
+                }
+            });
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>
