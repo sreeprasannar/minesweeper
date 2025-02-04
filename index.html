@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kawaii Minesweeper</title>
+    <title>Kawaii Birthday Minesweeper</title>
     <style>
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -33,13 +33,52 @@
             background-color: #fff0f5;
         }
         .cell.bomb {
-            background-color: #ff0000;
+            background-color: #ffcccb;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: pink;
+            border-radius: 50%;
+            animation: fall 1s linear;
+        }
+        .quiz-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 3px solid #ff69b4;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        .quiz-popup button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100px); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <h1>Kawaii Minesweeper</h1>
+    <h1>🎉 Kawaii Birthday Minesweeper 🎉</h1>
     <div class="board" id="board"></div>
+
+    <div class="quiz-popup" id="quiz-popup">
+        <p id="quiz-question">What is the cutest animal? 🐰</p>
+        <button onclick="checkAnswer(true)">Bunny 🐇</button>
+        <button onclick="checkAnswer(false)">Shark 🦈</button>
+    </div>
 
     <script>
         const boardSize = 8;
@@ -47,6 +86,8 @@
         let mines = [];
         let cells = [];
         const board = document.getElementById('board');
+        const quizPopup = document.getElementById('quiz-popup');
+        let quizMines = new Set();
 
         function createBoard() {
             for (let i = 0; i < boardSize * boardSize; i++) {
@@ -67,6 +108,11 @@
             }
             mines = Array.from(minePositions);
             mines.forEach(index => cells[index].dataset.mine = 'true');
+            
+            // Randomly assign some mines to be quiz triggers
+            while (quizMines.size < Math.floor(mineCount / 2)) {
+                quizMines.add(mines[Math.floor(Math.random() * mines.length)]);
+            }
         }
 
         function countAdjacentMines(index) {
@@ -86,9 +132,15 @@
             if (cell.classList.contains('revealed')) return;
             
             if (cell.dataset.mine) {
-                cell.classList.add('bomb');
-                cell.innerText = '💣';
-                alert('Game Over!');
+                if (quizMines.has(index)) {
+                    cell.innerText = quizMines.has(index) ? '💬' : '🎉';
+                    showQuiz();
+                } else {
+                    cell.classList.add('bomb');
+                    cell.innerText = quizMines.has(index) ? '💬' : '🎉';
+                    dropConfetti();
+                    alert('Surprise! 🎊 Happy Birthday!');
+                }
                 revealAllMines();
                 return;
             }
@@ -116,9 +168,29 @@
             document.querySelectorAll('.cell').forEach(cell => {
                 if (cell.dataset.mine) {
                     cell.classList.add('bomb');
-                    cell.innerText = '💣';
+                    cell.innerText = quizMines.has(index) ? '💬' : '🎉';
                 }
             });
+        }
+
+        function dropConfetti() {
+            for (let i = 0; i < 30; i++) {
+                let confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 1000);
+            }
+        }
+
+        function showQuiz() {
+            quizPopup.style.display = 'block';
+        }
+
+        function checkAnswer(correct) {
+            alert(correct ? 'Yay! 🎉 You got it right!' : 'Oops! Try again!');
+            quizPopup.style.display = 'none';
         }
 
         createBoard();
