@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kawaii Birthday Minesweeper</title>
+    <title>Minesweeper</title>
     <style>
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -21,7 +21,7 @@
             width: 40px;
             height: 40px;
             background-color: #ffb6c1;
-            border: 2px solid #ff69b4;
+            border: 2px solid #e577ae;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -68,26 +68,48 @@
             0% { transform: translateY(0); opacity: 1; }
             100% { transform: translateY(100px); opacity: 0; }
         }
+        .overlay {
+            position: "fixed";
+            top: "0";
+            left: "0";
+            width: "100vw";
+            height: "100vh";
+            background: "rgba(0, 0, 0, 0)";
+            display: "none";
+        }
     </style>
 </head>
 <body>
-    <h1>🎉 Kawaii Birthday Minesweeper 🎉</h1>
+    <h1>minesweeper 💣 </h1>
     <div class="board" id="board"></div>
-
+    <div id="overlay"></div>
     <div class="quiz-popup" id="quiz-popup">
         <p id="quiz-question">What is the cutest animal? 🐰</p>
-        <button onclick="checkAnswer(true)">Bunny 🐇</button>
-        <button onclick="checkAnswer(false)">Shark 🦈</button>
+        <div id="quiz-options">
+            <button onclick="checkAnswer(true)">Bunny 🐇</button>
+            <button onclick="checkAnswer(false)">Shark 🦈</button>
+        </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.7/underscore-umd-min.js"></script>
     <script>
+        let quizData = [];
+        async function loadQuizData() {
+            const response = await fetch('quiz.json');
+            quizData = await response.json();
+        }
+        
         const boardSize = 8;
         const mineCount = 10;
         let mines = [];
         let cells = [];
+        let revealed = 0;
         const board = document.getElementById('board');
         const quizPopup = document.getElementById('quiz-popup');
+        const quizQuestion = document.getElementById('quiz-question');
+        const quizOptions = document.getElementById('quiz-options');
+
         let quizMines = new Set();
+        let questionsAvailable = [...Array(mineCount - 1).keys()];
 
         function createBoard() {
             for (let i = 0; i < boardSize * boardSize; i++) {
@@ -110,7 +132,7 @@
             mines.forEach(index => cells[index].dataset.mine = 'true');
             
             // Randomly assign some mines to be quiz triggers
-            while (quizMines.size < Math.floor(mineCount / 2)) {
+            while (quizMines.size < mineCount - 1) {
                 quizMines.add(mines[Math.floor(Math.random() * mines.length)]);
             }
         }
@@ -132,14 +154,22 @@
             if (cell.classList.contains('revealed')) return;
             
             if (cell.dataset.mine) {
-                if (quizMines.has(index)) {
-                    cell.innerText = quizMines.has(index) ? '💬' : '🎉';
-                    showQuiz();
+                // if (quizMines.has(index)) {
+                console.log(revealed);
+                if (revealed < quizMines.size) {
+                    cell.innerText = '💬';
+                    const questionIndex = _.sample(questionsAvailable);
+                    console.log(questionIndex, questionsAvailable);
+                    const { question, options, correctIndex } = quizData[questionIndex];
+                    showQuiz(question, options, correctIndex, cell, questionIndex);
                 } else {
                     cell.classList.add('bomb');
-                    cell.innerText = quizMines.has(index) ? '💬' : '🎉';
+                    cell.innerText = '🎉';
                     dropConfetti();
-                    alert('Surprise! 🎊 Happy Birthday!');
+                    showQuiz('Surprise! 🎊 Happy Birthday!', [], null, cell);
+                    setTimeout(() => {
+                        quizPopup.style.display = 'none';
+                    }, 1500)
                 }
                 // revealAllMines();
                 return;
@@ -184,19 +214,57 @@
             }
         }
 
-        function showQuiz() {
+        function showQuiz(question, options, correctIndex, cell, questionIndex) {
+            quizPopup.style.display = 'block';
+            quizQuestion.textContent = 'Sample question'
+            quizQuestion.textContent = `💬 ${question}`;
+            quizOptions.innerHTML = '';
+            options.forEach((option, index) => {
+                let button = document.createElement('button');
+                const { text, scold, appreciate } = option;
+                button.textContent = text;
+                button.addEventListener('click', (event) => {
+                    checkAnswer(index === correctIndex, appreciate, scold, cell, questionIndex);
+                });
+                quizOptions.appendChild(button);
+            });
+
             quizPopup.style.display = 'block';
         }
 
-        function checkAnswer(correct) {
+        function checkAnswer(correct, appreciate, scold, cell, questionIndex) {
+            console.log("Checking answer");
+            let responses = [];
             let response = document.createElement('p');
-            response.textContent = correct ? 'Yay! 🎉 You got it right!' : 'Oops! Try again!';
+            const appreciateMsg = `Yay! 🎉 ${appreciate}`
+            response.textContent = correct ? appreciateMsg : scold;
             response.style.background = correct ? '#ccffcc' : '#ffcccc';
+            responses.push(response)
             document.getElementById('quiz-popup').appendChild(response);
-            setTimeout(() => {
-                quizPopup.style.display = 'none';
-                response.remove();
-            }, 2000);
+            if (correct) {
+                cell.innerText = '🌟';
+                cell.classList.add('revealed')
+                revealed += 1;
+                setTimeout(() => {
+                    quizPopup.style.display = 'none';
+                    response.remove();
+                }, 1500);
+                questionsAvailable = questionsAvailable.filter(item => item !== questionIndex);
+            }
+            else {
+                setTimeout(() => {
+                    let response = document.createElement('p');
+                    // response.textContent = '... maybe come back to this?';
+                    // response.style.background = '#e6ff69';
+                    // document.getElementById('quiz-popup').appendChild(response);
+                    // responses.push(response)
+                }, 1000);
+                setTimeout(() => {
+                    quizPopup.style.display = 'none';
+                    responses.forEach((response) => response.remove());
+                }, 3500)
+            }
+
         }
       
         // function showQuiz() {
@@ -208,6 +276,7 @@
         //     quizPopup.style.display = 'none';
         // }
 
+        loadQuizData();
         createBoard();
     </script>
 </body>
