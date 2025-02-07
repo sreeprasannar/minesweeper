@@ -1,21 +1,21 @@
 [
     {
-        "avatar" : "👧🏻",
-        "question": "what's the most important life skill you've taught Richa?",
+        "avatar" : "👨🏽‍🍳",
+        "question": "what's richa's favorite thing that you cook/make?",
         "options": [{
-            "text": "",
+            "text": "vermicelli",
+            "scold": "hasn't happened but there's potential for you to change my mind about this miserable school breakfast memory 🙄😒",
+            "appreciate": null
+        }, {
+            "text": "cocktails 🍹",
+            "scold": "solid second contender, those drinks you made were 🔥. but try again, there's a better world out there",
+            "appreciate": null
+        }, {
+            "text": "dosa w special magic chutney",
             "scold": null,
-            "appreciate": "Heck yeah, bunny gang assemble!"
-        }, {
-            "text": "Shark 🦈",
-            "scold": "bro u okay? a shark?",
-            "appreciate": null
-        }, {
-            "text": "Cat 🐱",
-            "scold": "could be.. but is it the cutest tho? huh?",
-            "appreciate": null
+            "appreciate": "yeeeee can have this all day err day 4eva 🫶🏽🥹"
         }],
-        "correctIndex": 0
+        "correctIndex": 2
     },
     {
         "avatar" : "🌻",
