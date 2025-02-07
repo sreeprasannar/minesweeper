@@ -95,13 +95,17 @@
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.7/underscore-umd-min.js"></script>
     <script>
         let quizData = [];
+        let questionsAvailable;
         async function loadQuizData() {
             const response = await fetch('quiz.json');
             quizData = await response.json();
+            await console.log(quizData.length);
+            questionsAvailable = await [...Array(quizData.length).keys()];
+            await console.log(questionsAvailable);
         }
         
         const boardSize = 8;
-        const mineCount = 10;
+        const mineCount = 4;
         let mines = [];
         let cells = [];
         let revealed = 0;
@@ -111,7 +115,6 @@
         const quizOptions = document.getElementById('quiz-options');
 
         let quizMines = new Set();
-        let questionsAvailable = [...Array(mineCount - 1).keys()];
 
         function createBoard() {
             for (let i = 0; i < boardSize * boardSize; i++) {
@@ -162,13 +165,18 @@
                     cell.innerText = '💬';
                     const questionIndex = _.sample(questionsAvailable);
                     console.log(questionIndex, questionsAvailable);
-                    const { question, options, correctIndex } = quizData[questionIndex];
-                    showQuiz(question, options, correctIndex, cell, questionIndex);
+                    const { avatar, question, options, correctIndex } = quizData[questionIndex];
+                    showQuiz(avatar, question, options, correctIndex, cell, questionIndex);
                 } else {
+                    let all_avatars = '';
+                    for (const quiz of quizData) {
+                        console.log(quiz);
+                        all_avatars += quiz['avatar'] || '';
+                    }
                     cell.classList.add('bomb');
                     cell.innerText = '🎉';
                     dropConfetti();
-                    showQuiz('Surprise! 🎊 Happy Birthday!', [], null, cell);
+                    showQuiz(all_avatars, 'Surprise! 🎊 Happy Birthday!', [], null, cell);
                     setTimeout(() => {
                         quizPopup.style.display = 'none';
                     }, 1500)
@@ -216,10 +224,10 @@
             }
         }
 
-        function showQuiz(question, options, correctIndex, cell, questionIndex) {
+        function showQuiz(avatar, question, options, correctIndex, cell, questionIndex) {
             quizPopup.style.display = 'block';
             quizQuestion.textContent = 'Sample question'
-            quizQuestion.textContent = `💬 ${question}`;
+            quizQuestion.textContent = `${avatar} 💬 ${question}`;
             quizOptions.innerHTML = '';
             options.forEach((option, index) => {
                 let button = document.createElement('button');
@@ -238,7 +246,7 @@
             console.log("Checking answer");
             let responses = [];
             let response = document.createElement('p');
-            const appreciateMsg = `Yay! 🎉 ${appreciate}`
+            const appreciateMsg = `${appreciate}`
             response.textContent = correct ? appreciateMsg : scold;
             response.style.background = correct ? '#ccffcc' : '#ffcccc';
             responses.push(response)
@@ -250,21 +258,21 @@
                 setTimeout(() => {
                     quizPopup.style.display = 'none';
                     response.remove();
-                }, 1500);
+                }, 3500);
                 questionsAvailable = questionsAvailable.filter(item => item !== questionIndex);
             }
             else {
+                // setTimeout(() => {
+                //     let response = document.createElement('p');
+                //     response.textContent = '... maybe come back to this?';
+                //     response.style.background = '#e6ff69';
+                //     document.getElementById('quiz-popup').appendChild(response);
+                //     responses.push(response)
+                // }, 1000);
                 setTimeout(() => {
-                    let response = document.createElement('p');
-                    // response.textContent = '... maybe come back to this?';
-                    // response.style.background = '#e6ff69';
-                    // document.getElementById('quiz-popup').appendChild(response);
-                    // responses.push(response)
-                }, 1000);
-                setTimeout(() => {
-                    quizPopup.style.display = 'none';
+                    // quizPopup.style.display = 'none';
                     responses.forEach((response) => response.remove());
-                }, 3500)
+                }, 1500)
             }
 
         }

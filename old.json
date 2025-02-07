@@ -1,0 +1,170 @@
+[{
+    "question": "What's the most adorable food-eating style?",
+    "options": [{
+        "text": "Tiny nibbles 🐹",
+        "scold": null,
+        "appreciate": "Nomming like a proper gentleman/lady!"
+    }, {
+        "text": "Whole face in bowl 🐶",
+        "scold": "That's called being hangry, not cute",
+        "appreciate": null
+    }, {
+        "text": "Messy everywhere 🍽️",
+        "scold": "Are you eating or redecorating?",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "Which is the cutest way to ask for attention?",
+    "options": [{
+        "text": "Gentle paw tap 🐾",
+        "scold": null,
+        "appreciate": "The perfect blend of polite and precious!"
+    }, {
+        "text": "Loud screaming 📢",
+        "scold": "Found the drama queen/king",
+        "appreciate": null
+    }, {
+        "text": "Breaking things 💥",
+        "scold": "That's called being a menace to society",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "What's the most adorable defense mechanism?",
+    "options": [{
+        "text": "Playing dead 💀",
+        "scold": null,
+        "appreciate": "Oscar-worthy performance, so smol yet so brave!"
+    }, {
+        "text": "Running away 🏃",
+        "scold": "Coward energy detected",
+        "appreciate": null
+    }, {
+        "text": "Showing teeth 😬",
+        "scold": "Trying to be fierce but looking like a dork",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "Which tiny container is the cutest to hide in?",
+    "options": [{
+        "text": "Cardboard box 📦",
+        "scold": null,
+        "appreciate": "If I fits, I sits - pure perfection!"
+    }, {
+        "text": "Sock drawer 🧦",
+        "scold": "That's where feet go, you monster",
+        "appreciate": null
+    }, {
+        "text": "Plant pot 🪴",
+        "scold": "Leave the plants alone, you're not a seed",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "What's the most precious way to show love?",
+    "options": [{
+        "text": "Tiny kisses 💕",
+        "scold": null,
+        "appreciate": "The smollest smoochies are the sweetest!"
+    }, {
+        "text": "Aggressive headbutts 🤕",
+        "scold": "That's assault, not affection",
+        "appreciate": null
+    }, {
+        "text": "Following everywhere 👣",
+        "scold": "Stalker vibes aren't cute",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "Which is the cutest rainy day activity?",
+    "options": [{
+        "text": "Watching raindrops 💧",
+        "scold": null,
+        "appreciate": "Contemplative cutie alert!"
+    }, {
+        "text": "Splashing puddles 💦",
+        "scold": "Chaos demon energy",
+        "appreciate": null
+    }, {
+        "text": "Hiding under bed 🛏️",
+        "scold": "Thunder isn't that scary, you big baby",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "What's the most adorable morning routine?",
+    "options": [{
+        "text": "Stretchy yawns 🌅",
+        "scold": null,
+        "appreciate": "Starting the day with maximum cuteness!"
+    }, {
+        "text": "Grumpy face 😠",
+        "scold": "Someone woke up on the wrong side of everywhere",
+        "appreciate": null
+    }, {
+        "text": "Demanding breakfast 🍳",
+        "scold": "Hangry isn't a personality trait",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "Which is the cutest playtime activity?",
+    "options": [{
+        "text": "Chasing bubbles 🫧",
+        "scold": null,
+        "appreciate": "Pure joy in pursuit of floaty magic!"
+    }, {
+        "text": "Destroying toys 🧸",
+        "scold": "That's toy murder, you savage",
+        "appreciate": null
+    }, {
+        "text": "Ignoring toys 🤷",
+        "scold": "Way to waste money on entertainment",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "What's the most precious bedtime behavior?",
+    "options": [{
+        "text": "Snuggling close 🤗",
+        "scold": null,
+        "appreciate": "Maximum cozy achievement unlocked!"
+    }, {
+        "text": "Taking all space 📏",
+        "scold": "The bed is not your kingdom",
+        "appreciate": null
+    }, {
+        "text": "Night zoomies 🏃‍♂️",
+        "scold": "It's called bedtime, not party time",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+},
+{
+    "question": "Which is the cutest way to celebrate?",
+    "options": [{
+        "text": "Happy dance 💃",
+        "scold": null,
+        "appreciate": "Those tiny moves are pure joy!"
+    }, {
+        "text": "Loud party 🎉",
+        "scold": "Inside voice exists for a reason",
+        "appreciate": null
+    }, {
+        "text": "Breaking things 💥",
+        "scold": "That's not celebration, that's destruction",
+        "appreciate": null
+    }],
+    "correctIndex": 0
+}]
