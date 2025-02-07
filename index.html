@@ -81,6 +81,8 @@
 </head>
 <body>
     <h1>minesweeper 💣 </h1>
+    click to reveal 🔢 </br>
+    long click to set flags ⛳️
     <div class="board" id="board"></div>
     <div id="overlay"></div>
     <div class="quiz-popup" id="quiz-popup">
@@ -223,7 +225,7 @@
                 let button = document.createElement('button');
                 const { text, scold, appreciate } = option;
                 button.textContent = text;
-                button.addEventListener('click', (event) => {
+                button.addEventListener('mousedown', (event) => {
                     checkAnswer(index === correctIndex, appreciate, scold, cell, questionIndex);
                 });
                 quizOptions.appendChild(button);
