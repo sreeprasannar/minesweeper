@@ -36,6 +36,24 @@
         "correctIndex": 0
     },
     {
+        "avatar": “✨”,
+        "question": "what’s the first video you made which involved Anshuman?”,
+        "options": [{
+            "text": “Skating reel”,
+            "scold": “nope, but it was such a beautiful day. the first and last of our reel-adventures 😂 ”,
+            "appreciate": null
+        }, {
+            "text": “the MHCID recap at the end of the year that was played at graduation“,
+            "scold":  “close, that was the 2nd video ever — and let’s be honest, that was all you laksh i just roared :3 ”,
+            "appreciate”: null
+        }, {
+            "text": “prototyping studio, fire pit video”,
+            "scold": null,
+            "appreciate": “🎊 that’s right, the one you faked zoom calls with Yuna and Stephon for. I sat at the fire, and also was helping test the sound on one of the nights everyone stayed late in the studio“
+        }],
+        "correctIndex": 2
+    },
+    {
         "avatar" : "🐮",
         "question": "what was Rakshita drinking the last time you met her?",
         "options": [{
